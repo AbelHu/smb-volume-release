@@ -1,0 +1,39 @@
+---
+<%
+  database_host = nil
+  if_p('azurefilebrokerpush.db.host') do |host|
+    database_host = host
+  end.else do
+    database_host = link('database').instances[0].address
+  end
+%>
+  buildpack: binary_buildpack
+  domain: "<%= p('azurefilebrokerpush.app_domain') %>"
+  env:
+    GOPACKAGENAME: azurefilebroker
+    GOVERSION: go1.7
+    SERVICENAME: "<%= p('azurefilebrokerpush.service_name') %>"
+    USERNAME: "<%= p('azurefilebrokerpush.username') %>"
+    PASSWORD: "<%= p('azurefilebrokerpush.password') %>"
+    LOGLEVEL: info
+    DBDRIVERNAME: "<%= p('azurefilebrokerpush.db.driver') %>"
+    DBCACERT: "<%= p('azurefilebrokerpush.db.cacert') %>"
+    HOSTNAMEINCERTIFICATE: "<%= p('azurefilebrokerpush.db.host_name_in_certificate') %>"
+    DBHOST: "<%= database_host %>"
+    DBPORT: "<%= p('azurefilebrokerpush.db.port') %>"
+    DBNAME: "<%= p('azurefilebrokerpush.db.name') %>"
+    DBUSERNAME: "<%= p('azurefilebrokerpush.db.username') %>"
+    DBPASSWORD: "<%= p('azurefilebrokerpush.db.password') %>"
+    ENVIRONMENT: "<%= p('azurefilebrokerpush.environment') %>"
+    ALLOWEDOPTIONS: "<%= p('azurefilebrokerpush.allowed_options') %>"
+    DEFAULTOPTIONS: "<%= p('azurefilebrokerpush.default_options') %>"
+    TENANTID: "<%= p('azurefilebrokerpush.azure.tenant_id') %>"
+    CLIENTID: "<%= p('azurefilebrokerpush.azure.client_id') %>"
+    CLIENTSECRET: "<%= p('azurefilebrokerpush.azure.client_secret') %>"
+    DEFAULTSUBSCRIPTIONID: "<%= p('azurefilebrokerpush.azure.default_subscription_id') %>"
+    DEFAULTRESOURCEGROUPNAME: "<%= p('azurefilebrokerpush.azure.default_resource_group_name') %>"
+    DEFAULTLOCATION: "<%= p('azurefilebrokerpush.azure.default_location') %>"
+    ALLOWCREATESTORAGEACCOUNT: "<%= p('azurefilebrokerpush.azure.allow_create_storage_account') %>"
+    ALLOWCREATEFILESHARE: "<%= p('azurefilebrokerpush.azure.allow_create_file_share') %>"
+    ALLOWDELETESTORAGEACCOUNT: "<%= p('azurefilebrokerpush.azure.allow_delete_storage_account') %>"
+    ALLOWDELETEFILESHARE: "<%= p('azurefilebrokerpush.azure.allow_delete_file_share') %>"

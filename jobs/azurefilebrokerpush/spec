@@ -1,0 +1,107 @@
+---
+name: azurefilebrokerpush
+
+templates:
+  deploy.sh.erb: bin/run
+  manifest.yml.erb: manifest.yml
+
+packages:
+  - azurefilebroker
+  - golang-smbvolume
+  - cf-cli-smbvolume
+
+consumes:
+  - name: database
+    type: database
+    optional: true
+
+properties:
+  azurefilebrokerpush.domain:
+    description: 'Cloud Foundry System Domain'
+  azurefilebrokerpush.app_domain:
+    description: 'Domain used to host the broker app'
+  azurefilebrokerpush.cf.admin_user:
+    description: 'Username of the CF admin user'
+  azurefilebrokerpush.cf.admin_password:
+    description: 'Password of the CF admin user'
+  azurefilebrokerpush.cf.dial_timeout:
+    description: 'CF CLI connection dial timeout'
+    default: 5
+  azurefilebrokerpush.organization:
+    description: 'Organization that hosts the app'
+  azurefilebrokerpush.space:
+    description: 'Space that hosts the app'
+  azurefilebrokerpush.username:
+    description: 'service broker username'
+  azurefilebrokerpush.password:
+    description: 'service broker password'
+  azurefilebrokerpush.service_name:
+    description: 'service name in marketplace'
+    default: azurefile
+  azurefilebrokerpush.db.driver:
+    description: 'mssql or mysql'
+    default: mysql
+  azurefilebrokerpush.db.cacert:
+    description: 'Content of CA Cert to verify SSL connection'
+    default: mysql
+  azurefilebrokerpush.db.host_name_in_certificate:
+    description: 'Specify the Common Name (CN) in the server certificate.'
+    default: mysql
+  azurefilebrokerpush.db.host:
+    description: 'database host'
+  azurefilebrokerpush.db.port:
+    description: 'database port'
+    default: 3306
+  azurefilebrokerpush.db.username:
+    description: 'database username'
+  azurefilebrokerpush.db.password:
+    description: 'database password'
+  azurefilebrokerpush.db.name:
+    description: 'database name'
+  azurefilebrokerpush.syslog_url:
+    description: 'External log service URL'
+  azurefilebrokerpush.error_on_misconfiguration:
+    description: 'Throw error on service misconfiguration during deployment'
+    default: true
+  azurefilebrokerpush.skip_cert_verify:
+    description: 'true if the cf api uses test certs that should not be verified'
+    default: false
+  azurefilebrokerpush.environment:
+    description: '(For preexisting shares) or the environment for Azure Management Service (For AzureFileShare): AzureCloud, AzureChinaCloud, AzureUSGovernment or AzureGermanCloud'
+    default: Preexisting
+  azurefilebrokerpush.allowed_options:
+    description: 'A comma separated list of parameters allowed to be set in during bind operations'
+    default: share,uid,gid,file_mode,dir_mode,readonly,vers,mount,domain,username,password,sec
+  azurefilebrokerpush.default_options:
+    description: 'A comma separated list of defaults specified as param:value'
+    default: vers:3.0
+  azurefilebrokerpush.azure.tenant_id:
+    description: 'The tenant id for your service principal on Azure'
+    default: ''
+  azurefilebrokerpush.azure.client_id:
+    description: 'The client id for your service principal on Azure'
+    default: ''
+  azurefilebrokerpush.azure.client_secret:
+    description: 'The client secret for your service principal on Azure'
+    default: ''
+  azurefilebrokerpush.azure.default_subscription_id:
+    description: 'The default Azure Subscription id to use for storage accounts on Azure'
+    default: ''
+  azurefilebrokerpush.azure.default_resource_group_name:
+    description: 'The default resource group name to use for storage accounts on Azure'
+    default: ''
+  azurefilebrokerpush.azure.default_location:
+    description: 'The default location to use for creating storage accounts on Azure'
+    default: ''
+  azurefilebrokerpush.azure.allow_create_storage_account:
+    description: 'Allow Broker to create storage accounts on Azure'
+    default: true
+  azurefilebrokerpush.azure.allow_create_file_share:
+    description: 'Allow Broker to create file shares on Azure'
+    default: true
+  azurefilebrokerpush.azure.allow_delete_storage_account:
+    description: 'Allow Broker to delete storage accounts which are created by Broker on Azure'
+    default: true
+  azurefilebrokerpush.azure.allow_delete_file_share:
+    description: 'Allow Broker to delete file shares which are created by Broker on Azure'
+    default: true
